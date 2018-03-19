@@ -19,14 +19,16 @@ public class Fahrzeug implements Serializable{
     private long id;
     
     private String hersteller ="";
+    private String modell="";
     private String baujahr ="";
 
     
     
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public Fahrzeug(){}
-    public Fahrzeug(String hersteller, String baujahr) {
+    public Fahrzeug(String hersteller, String modell, String baujahr) {
         this.baujahr = baujahr;
+        this.modell = modell;
         this.hersteller = hersteller;
     }
     
@@ -34,30 +36,40 @@ public class Fahrzeug implements Serializable{
 //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getter/Setter">
+ 
+//</editor-fold>
+
     public long getId() {
         return id;
     }
-    
+
     public void setId(long id) {
         this.id = id;
     }
-    
+
     public String getHersteller() {
         return hersteller;
     }
-    
+
     public void setHersteller(String hersteller) {
         this.hersteller = hersteller;
     }
-    
+
+    public String getModell() {
+        return modell;
+    }
+
+    public void setModell(String modell) {
+        this.modell = modell;
+    }
+
     public String getBaujahr() {
         return baujahr;
     }
-    
+
     public void setBaujahr(String baujahr) {
         this.baujahr = baujahr;
     }
-//</editor-fold>
     
     
      
