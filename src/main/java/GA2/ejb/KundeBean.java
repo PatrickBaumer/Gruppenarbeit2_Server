@@ -5,12 +5,14 @@
  */
 package GA2.ejb;
 
+import GA2.jpa.Kunde;
 import javax.ejb.Stateless;
 
 @Stateless
 public class KundeBean extends EntityBean<Kunde, Long> {
+    
     public KundeBean() {
-        super.(Kunde.class);
+        super(Kunde.class);
     } 
     
 }

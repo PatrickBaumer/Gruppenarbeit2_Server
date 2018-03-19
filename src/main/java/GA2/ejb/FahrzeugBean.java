@@ -5,6 +5,7 @@
  */
 package GA2.ejb;
 
+import GA2.jpa.Fahrzeug;
 import javax.ejb.Stateless;
 
 /**

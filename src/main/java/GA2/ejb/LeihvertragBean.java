@@ -5,6 +5,7 @@
  */
 package GA2.ejb;
 
+import GA2.jpa.Leihvertrag;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
