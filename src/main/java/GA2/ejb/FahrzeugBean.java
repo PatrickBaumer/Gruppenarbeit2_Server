@@ -5,10 +5,17 @@
  */
 package GA2.ejb;
 
+import javax.ejb.Stateless;
+
 /**
  *
- * @author Patrick Baumer
+ * @author jsche
  */
-public class NewClass {
+@Stateless
+public class FahrzeugBean extends EntityBean<Fahrzeug, Long>{
+    public FahrzeugBean() {
+        super(Fahrzeug.class);
+    }
+    
     
 }
