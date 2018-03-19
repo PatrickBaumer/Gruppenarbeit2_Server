@@ -6,6 +6,7 @@
 package GA2.ejb;
 
 import GA2.jpa.Fahrzeug;
+import java.util.List;
 import javax.ejb.Stateless;
 
 /**
@@ -16,6 +17,12 @@ import javax.ejb.Stateless;
 public class FahrzeugBean extends EntityBean<Fahrzeug, Long>{
     public FahrzeugBean() {
         super(Fahrzeug.class);
+    }
+    
+    public List<Fahrzeug> findAll(){
+        return em.createQuery("SELECT f FROM Fahrzeug f"
+                            + "ORDER BY f.hersteller")
+                            .getResultList();
     }
     
     

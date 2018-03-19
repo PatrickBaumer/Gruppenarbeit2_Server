@@ -26,7 +26,7 @@ public class Leihvertrag implements Serializable{
     
     
     @ManyToOne
-    private Fahrzeug fahrzeugID;
+    private Fahrzeug fahrzeugId;
     @ManyToOne
     private Kunde kundenId;
 
@@ -39,11 +39,11 @@ public class Leihvertrag implements Serializable{
 //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public Leihvertrag() {}
     
-    public Leihvertrag(Date beginnDatum, Date endeDatum) {
+    public Leihvertrag(Date beginnDatum, Date endeDatum, Fahrzeug fahrzeugId, Kunde kundenId) {
         this.beginnDatum=beginnDatum;
         this.endeDatum= endeDatum;
-        this.fahrzeugID = this.fahrzeugID;
-        this.kundenId = this.kundenId;
+        this.fahrzeugId = fahrzeugId;
+        this.kundenId = kundenId;
     }
 //</editor-fold>
 //<editor-fold defaultstate="collapsed" desc="Getter/setter">
@@ -56,12 +56,12 @@ public class Leihvertrag implements Serializable{
         this.id = id;
     }
     
-    public Fahrzeug getFahrzeugID() {
-        return fahrzeugID;
+    public Fahrzeug getFahrzeugId() {
+        return fahrzeugId;
     }
     
-    public void setFahrzeugID(Fahrzeug fahrzeugID) {
-        this.fahrzeugID = fahrzeugID;
+    public void setFahrzeugId(Fahrzeug fahrzeugId) {
+        this.fahrzeugId = fahrzeugId;
     }
     
     public Kunde getKundenId() {
