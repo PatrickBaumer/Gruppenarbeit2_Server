@@ -8,6 +8,9 @@ package GA2.jpa;
 import java.io.Serializable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -15,17 +18,28 @@ import javax.persistence.Id;
  */
 public class Fahrzeug implements Serializable{
     @Id
-     @GeneratedValue(generator ="fahrzeug_ids")
-    private long id;
+    @GeneratedValue(generator ="fahrzeug_ids")
+    @TableGenerator (name = "fahrzeug_ids" , initialValue = 0, allocationSize = 50)
+    private long id = 0L;
     
+    @NotNull
+    @Size (min = 1)
     private String hersteller ="";
+    
+    @NotNull
+    @Size (min = 1)
     private String modell="";
+    
+    @NotNull
+    @Size (min = 1)
     private String baujahr ="";
 
     
     
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
-    public Fahrzeug(){}
+    public Fahrzeug(){
+    }
+    
     public Fahrzeug(String hersteller, String modell, String baujahr) {
         this.baujahr = baujahr;
         this.modell = modell;

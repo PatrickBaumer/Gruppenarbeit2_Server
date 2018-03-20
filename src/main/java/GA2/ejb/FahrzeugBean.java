@@ -19,9 +19,10 @@ public class FahrzeugBean extends EntityBean<Fahrzeug, Long>{
         super(Fahrzeug.class);
     }
     
-    public List<Fahrzeug> findAll(){
+    
+    public List<Fahrzeug> findAllFahrzeuge(){
         return em.createQuery("SELECT f FROM Fahrzeug f"
-                            + "ORDER BY f.hersteller")
+                            + "ORDER BY f.id")
                             .getResultList();
     }
     

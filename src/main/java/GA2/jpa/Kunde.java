@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -20,20 +22,41 @@ public class Kunde implements Serializable{
     @Id
     @GeneratedValue(generator ="kunden_ids")
     @TableGenerator(name="kunden_ids", initialValue = 0, allocationSize = 50)
-    private long id;
+    private long id = 0L;
     
    
-    
+    @NotNull
+    @Size(min = 1)
     private String vorname ="";
+    
+    @NotNull
+    @Size(min = 1)
     private String nachname ="";
+    
+    @NotNull
+    @Size(min = 1)
     private String straße ="";
+    
+    @NotNull
+    @Size(min = 1)
     private String hausnummer ="";
+    
+    @NotNull
+    @Size(min = 1)
     private String plz ="";
+    
+    @NotNull
+    @Size(min = 1)
     private String ort ="";
+    
+    @NotNull
+    @Size(min = 1)
     private String land ="";
 
     
-    public Kunde(){}
+    public Kunde(){
+    }
+    
     public Kunde(String vorname, String nachname, String straße, String hausnummer,String plz, String ort ) {
         this.vorname = vorname;
         this.nachname = nachname;

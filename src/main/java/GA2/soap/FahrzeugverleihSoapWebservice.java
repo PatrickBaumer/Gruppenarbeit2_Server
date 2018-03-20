@@ -38,35 +38,50 @@ public class FahrzeugverleihSoapWebservice {
     @WebMethod
     @WebResult (name="kunde")
     public Kunde createNewKunde(@WebParam(name = "kunde") Kunde kunde) {
-        return kundeBean.saveNew(kunde);
+        return this.kundeBean.saveNew(kunde);
     }
     
     @WebMethod
     @WebResult (name="fahrzeug")
     public Fahrzeug createNewFahrzeug(@WebParam(name = "fahrzeug") Fahrzeug fahrzeug) {
-        return fahrzeugBean.saveNew(fahrzeug);
+        return this.fahrzeugBean.saveNew(fahrzeug);
     }
     
     @WebMethod
-    @WebResult(name = "leihvertrag")
+    @WebResult (name = "leihvertrag")
     public Leihvertrag createNewLeihvertrag (
-            @WebParam(name = "rentStart")Date rentStart
-            @WebParam(name = "rentEnde")Date rentEnde
-            @WebParam(name = "fahrzeugId")Fahrzeug fahrzeug) {
-        return leihvertragBean.saveNew(leihvertrag);
+            @WebParam(name = "loanStart")Date loanStart,
+            @WebParam(name = "loanEnde")Date loanEnde,
+            @WebParam(name = "fahrzeug")Fahrzeug fahrzeug, 
+            @WebParam(name = "kunde") Kunde kunde) {
+        return this.leihvertragBean.loanACar(loanStart, loanEnde, fahrzeug, kunde);
     }
     
     @WebMethod
     @WebResult (name = "fahrzeug")
-    public List<Fahrzeug> findAllFahrzeug(){
-        return fahrzeugBean.findAll();
+    public List<Fahrzeug> findAllFahrzeuge(){
+        return this.fahrzeugBean.findAllFahrzeuge();
+    }
+    
+    @WebMethod
+    @WebResult (name = "fahrzeug")
+    public Fahrzeug findFahrzeugById(
+            @WebParam(name = "fahrzeugId") Long fahrzeugId) {
+        return this.fahrzeugBean.findById(fahrzeugId);
+    }
+    
+    @WebMethod
+    @WebResult (name = "kunde")
+    public Kunde findKundeById(
+            @WebParam(name = "kundeId") Long kundeId) {
+        return this.kundeBean.findById(kundeId);
     }
     
     @WebMethod
     @WebResult (name = "leihvertrag")
     public List<Leihvertrag> findLeihvertragByKunde (
             @WebParam(name = "kunde") Kunde kunde) {
-        return leihvertragBean.findAllByKunde(kunde);
+        return this.leihvertragBean.findAllByKunde(kunde);
     }
     
             

@@ -23,15 +23,24 @@ public class LeihvertragBean extends EntityBean<Leihvertrag, Long> {
         super(Leihvertrag.class);
     }
     
-    public List<Leihvertrag> findByRentBetween(Date rentStart, Date rentEnde, Fahrzeug fahrzeug) {
-        return em.createQuery("SELECT l FROM Leihvertrag l"
-                            + "WHERE ((l.beginnDatum > :rentStart AND l.beginnDatum > :rentEnde)"
-                            + "OR (l.endeDatum < :rentStart AND l.endeDatum < :rentEnde))"
-                            + "AND l.fahzeugId.id == fahrzeug.id"
-                            + "ORDER BY l.beginnDatum, l.fahrzeugID.modell")
-                            .setParameter("rentStart", rentStart)
-                            .setParameter("rentEnde", rentEnde)
+    public Leihvertrag loanACar(Date loanStart, Date loanEnde, Fahrzeug fahrzeug, Kunde kunde) {
+        List<Leihvertrag> fittingLeihvertrag =
+                em.createQuery("SELECT l FROM Leihvertrag l"
+                            + "WHERE ((l.beginnDatum > :loanStart AND l.beginnDatum < :loanEnde)"
+                            + "OR (l.endeDatum > :loanStart AND l.endeDatum < :loanEnde))"
+                            + "OR (l.beginnDatum < :loanStart AND l.endeDatum > :loanEnde))"
+                            + "OR (l.beginnDatum > :loanStart AND l.endeDatum < :loanEnde))"
+                            + "AND l.fahzeugId.id == fahrzeug.id")
+                            .setParameter("loanStart", loanStart)
+                            .setParameter("loanEnde", loanEnde)
+                            .setParameter("fahrzeug", fahrzeug)
                             .getResultList();
+        if (fittingLeihvertrag != null) {
+            throw new LeihException ("Das Auto ist in diesem Zeitraum bereits ausgeliehen.");
+        }
+        else {
+            return new Leihvertrag(loanStart, loanEnde, fahrzeug, kunde);
+        }
     }
     
     public List<Leihvertrag> findAllByKunde (Kunde kunde) {
@@ -40,5 +49,14 @@ public class LeihvertragBean extends EntityBean<Leihvertrag, Long> {
                             + "ORDER BY l.startDatum")
                             .setParameter("kunde", kunde)
                             .getResultList();
+    }
+    
+    public class LeihException extends RuntimeException {
+        public LeihException() {
+            
+        }
+        public LeihException (String s) {
+            super(s);
+        }
     }
 }
