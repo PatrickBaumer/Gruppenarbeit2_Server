@@ -7,6 +7,7 @@ package GA2.jpa;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -20,6 +21,7 @@ import javax.validation.constraints.NotNull;
  *
  * @author Patrick Baumer
  */
+@Entity
 public class Leihvertrag implements Serializable{
     @Id
     @GeneratedValue(generator ="leihvertrag_ids")

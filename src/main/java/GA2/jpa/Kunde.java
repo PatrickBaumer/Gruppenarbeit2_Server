@@ -6,9 +6,12 @@
 package GA2.jpa;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,7 +20,10 @@ import javax.validation.constraints.Size;
  *
  * @author Patrick Baumer
  */
+@Entity
 public class Kunde implements Serializable{
+    
+
     
     @Id
     @GeneratedValue(generator ="kunden_ids")
