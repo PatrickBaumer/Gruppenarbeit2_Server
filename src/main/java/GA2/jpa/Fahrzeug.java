@@ -6,6 +6,7 @@
 package GA2.jpa;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.TableGenerator;
@@ -16,6 +17,7 @@ import javax.validation.constraints.Size;
  *
  * @author Patrick Baumer
  */
+@Entity
 public class Fahrzeug implements Serializable{
     @Id
     @GeneratedValue(generator ="fahrzeug_ids")
