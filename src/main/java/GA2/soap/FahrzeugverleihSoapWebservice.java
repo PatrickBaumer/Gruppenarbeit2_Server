@@ -21,7 +21,7 @@ import javax.jws.WebService;
 
 /**
  *
- * @author Patrick Baumer
+ * @author Manuel
  */
 @WebService (serviceName = "Fahrzeugverleih")
 public class FahrzeugverleihSoapWebservice {
@@ -53,7 +53,7 @@ public class FahrzeugverleihSoapWebservice {
             @WebParam(name = "loanStart")Date loanStart,
             @WebParam(name = "loanEnde")Date loanEnde,
             @WebParam(name = "fahrzeug")Fahrzeug fahrzeug, 
-            @WebParam(name = "kunde") Kunde kunde) {
+            @WebParam(name = "kunde") Kunde kunde) throws Exception{
         return this.leihvertragBean.loanACar(loanStart, loanEnde, fahrzeug, kunde);
     }
     

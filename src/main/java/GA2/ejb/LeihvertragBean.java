@@ -14,49 +14,69 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author jsche
+ * @author Manuel
  */
 @Stateless
 public class LeihvertragBean extends EntityBean<Leihvertrag, Long> {
-    
+
     public LeihvertragBean() {
         super(Leihvertrag.class);
     }
-    
-    public Leihvertrag loanACar(Date loanStart, Date loanEnde, Fahrzeug fahrzeug, Kunde kunde) {
-        List<Leihvertrag> fittingLeihvertrag =
-                em.createQuery("SELECT l FROM Leihvertrag l"
-                            + "WHERE ((l.beginnDatum > :loanStart AND l.beginnDatum < :loanEnde)"
-                            + "OR (l.endeDatum > :loanStart AND l.endeDatum < :loanEnde))"
-                            + "OR (l.beginnDatum < :loanStart AND l.endeDatum > :loanEnde))"
-                            + "OR (l.beginnDatum > :loanStart AND l.endeDatum < :loanEnde))"
-                            + "AND l.fahzeugId.id == fahrzeug.id")
+
+    public Leihvertrag loanACar(Date loanStart, Date loanEnde, Fahrzeug fahrzeug, Kunde kunde) throws Exception {
+        
+        boolean hilf = false;
+        
+        List<Leihvertrag> fittingLeihvertrag1 = em.createQuery("SELECT l FROM Leihvertrag l "
+                + "WHERE l.endeDatum >= :loanStart AND l.endeDatum <= :loanEnde AND l.fahzeugId = :fahrzeug")
+                .setParameter("loanStart", loanStart)
+                .setParameter("loanEnde", loanEnde)
+                .setParameter("fahrzeug", fahrzeug)
+                .getResultList();
+        if (fittingLeihvertrag1.isEmpty()) {
+            List<Leihvertrag> fittingLeihvertrag2 = em.createQuery("SELECT l FROM Leihvertrag l "
+                    + "WHERE l.beginnDatum >= :loanStart AND l.beginnDatum <= :loanEnde AND l.fahzeugId = :fahrzeug")
+                    .setParameter("loanStart", loanStart)
+                    .setParameter("loanEnde", loanEnde)
+                    .setParameter("fahrzeug", fahrzeug)
+                    .getResultList();
+            if (fittingLeihvertrag2.isEmpty()) {
+                List<Leihvertrag> fittingLeihvertrag3 = em.createQuery("SELECT l FROM Leihvertrag l "
+                        + "WHERE l.beginnDatum >= :loanStart AND l.endeDatum <= :loanEnde AND l.fahzeugId = :fahrzeug")
+                        .setParameter("loanStart", loanStart)
+                        .setParameter("loanEnde", loanEnde)
+                        .setParameter("fahrzeug", fahrzeug)
+                        .getResultList();
+
+                if (fittingLeihvertrag3.isEmpty()) {
+                    List<Leihvertrag> fittingLeihvertrag4 = em.createQuery("SELECT l FROM Leihvertrag l "
+                            + "WHERE l.beginnDatum <= :loanStart AND l.endeDatum >= :loanEnde AND l.fahzeugId = :fahrzeug")
                             .setParameter("loanStart", loanStart)
                             .setParameter("loanEnde", loanEnde)
                             .setParameter("fahrzeug", fahrzeug)
                             .getResultList();
-        if (fittingLeihvertrag != null) {
-            throw new LeihException ("Das Auto ist in diesem Zeitraum bereits ausgeliehen.");
+
+                    if (fittingLeihvertrag4.isEmpty()) {
+                        hilf = true;
+                    } 
+                }
+            }
+
         }
-        else {
-            return new Leihvertrag(loanStart, loanEnde, fahrzeug, kunde);
-        }
+            if (hilf) {
+               return this.saveNew(new Leihvertrag(loanStart, loanEnde, fahrzeug, kunde)); 
+            }
+            else {
+                throw new Exception();
+            }
+        
     }
-    
-    public List<Leihvertrag> findAllByKunde (Kunde kunde) {
-        return em.createQuery("SELECT l FROM Leihvertrag l"
-                            + "WHERE l.kundenId.id == kunde.id"
-                            + "ORDER BY l.startDatum")
-                            .setParameter("kunde", kunde)
-                            .getResultList();
-    }
-    
-    public class LeihException extends RuntimeException {
-        public LeihException() {
-            
-        }
-        public LeihException (String s) {
-            super(s);
-        }
+
+    public List<Leihvertrag> findAllByKunde(Kunde kunde) {
+        return em.createQuery("SELECT l FROM Leihvertrag l "
+                + "WHERE l.kundenId = :kunde "
+                + "ORDER BY l.beginnDatum")
+                .setParameter("kunde", kunde)
+                .getResultList();
     }
 }

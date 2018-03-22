@@ -21,7 +21,7 @@ public class FahrzeugBean extends EntityBean<Fahrzeug, Long>{
     
     
     public List<Fahrzeug> findAllFahrzeuge(){
-        return em.createQuery("SELECT f FROM Fahrzeug f"
+        return em.createQuery("SELECT f FROM Fahrzeug f "
                             + "ORDER BY f.id")
                             .getResultList();
     }
