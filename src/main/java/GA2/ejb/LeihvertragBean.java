@@ -28,21 +28,21 @@ public class LeihvertragBean extends EntityBean<Leihvertrag, Long> {
         boolean hilf = false;
         
         List<Leihvertrag> fittingLeihvertrag1 = em.createQuery("SELECT l FROM Leihvertrag l "
-                + "WHERE l.endeDatum >= :loanStart AND l.endeDatum <= :loanEnde AND l.fahzeugId = :fahrzeug")
+                + "WHERE l.endeDatum >= :loanStart AND l.endeDatum <= :loanEnde AND l.fahrzeugId = :fahrzeug")
                 .setParameter("loanStart", loanStart)
                 .setParameter("loanEnde", loanEnde)
                 .setParameter("fahrzeug", fahrzeug)
                 .getResultList();
         if (fittingLeihvertrag1.isEmpty()) {
             List<Leihvertrag> fittingLeihvertrag2 = em.createQuery("SELECT l FROM Leihvertrag l "
-                    + "WHERE l.beginnDatum >= :loanStart AND l.beginnDatum <= :loanEnde AND l.fahzeugId = :fahrzeug")
+                    + "WHERE l.beginnDatum >= :loanStart AND l.beginnDatum <= :loanEnde AND l.fahrzeugId = :fahrzeug")
                     .setParameter("loanStart", loanStart)
                     .setParameter("loanEnde", loanEnde)
                     .setParameter("fahrzeug", fahrzeug)
                     .getResultList();
             if (fittingLeihvertrag2.isEmpty()) {
                 List<Leihvertrag> fittingLeihvertrag3 = em.createQuery("SELECT l FROM Leihvertrag l "
-                        + "WHERE l.beginnDatum >= :loanStart AND l.endeDatum <= :loanEnde AND l.fahzeugId = :fahrzeug")
+                        + "WHERE l.beginnDatum >= :loanStart AND l.endeDatum <= :loanEnde AND l.fahrzeugId = :fahrzeug")
                         .setParameter("loanStart", loanStart)
                         .setParameter("loanEnde", loanEnde)
                         .setParameter("fahrzeug", fahrzeug)
@@ -50,7 +50,7 @@ public class LeihvertragBean extends EntityBean<Leihvertrag, Long> {
 
                 if (fittingLeihvertrag3.isEmpty()) {
                     List<Leihvertrag> fittingLeihvertrag4 = em.createQuery("SELECT l FROM Leihvertrag l "
-                            + "WHERE l.beginnDatum <= :loanStart AND l.endeDatum >= :loanEnde AND l.fahzeugId = :fahrzeug")
+                            + "WHERE l.beginnDatum <= :loanStart AND l.endeDatum >= :loanEnde AND l.fahrzeugId = :fahrzeug")
                             .setParameter("loanStart", loanStart)
                             .setParameter("loanEnde", loanEnde)
                             .setParameter("fahrzeug", fahrzeug)

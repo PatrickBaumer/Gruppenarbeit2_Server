@@ -11,11 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+
 
 /**
  *
@@ -26,23 +24,21 @@ public class Leihvertrag implements Serializable{
     @Id
     @GeneratedValue(generator ="leihvertrag_ids")
     @TableGenerator(name = "leihvertrag_ids", initialValue = 0, allocationSize = 50)
-    private long id = 0L;
+    private long id = 0;
     
     
     @ManyToOne
-    @NotNull
-    private Fahrzeug fahrzeugId = null;
+    Fahrzeug fahrzeugId;
     
     
     @ManyToOne
-    @NotNull
-    private Kunde kundenId = null;
+    Kunde kundenId;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date beginnDatum = new Date();
     
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date endeDatum = new Date();
 
     
@@ -50,8 +46,8 @@ public class Leihvertrag implements Serializable{
     public Leihvertrag() {}
     
     public Leihvertrag(Date beginnDatum, Date endeDatum, Fahrzeug fahrzeugId, Kunde kundenId) {
-        this.beginnDatum=beginnDatum;
-        this.endeDatum= endeDatum;
+        this.beginnDatum = beginnDatum;
+        this.endeDatum = endeDatum;
         this.fahrzeugId = fahrzeugId;
         this.kundenId = kundenId;
     }
