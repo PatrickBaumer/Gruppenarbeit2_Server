@@ -25,6 +25,10 @@ public class LeihvertragBean extends EntityBean<Leihvertrag, Long> {
 
     public Leihvertrag loanACar(Date loanStart, Date loanEnde, Fahrzeug fahrzeug, Kunde kunde) throws Exception {
         
+        if (loanEnde.before(loanStart)) {
+            throw new Exception();
+        }
+        
         boolean hilf = false;
         
         List<Leihvertrag> fittingLeihvertrag1 = em.createQuery("SELECT l FROM Leihvertrag l "
@@ -63,6 +67,8 @@ public class LeihvertragBean extends EntityBean<Leihvertrag, Long> {
             }
 
         }
+        
+        
             if (hilf) {
                return this.saveNew(new Leihvertrag(loanStart, loanEnde, fahrzeug, kunde)); 
             }
